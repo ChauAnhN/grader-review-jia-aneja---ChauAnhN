@@ -16,8 +16,18 @@ else
 fi 
 
 cp student-submission/ListExamples.java grading-area/
-cp TestListExamples.java grading-area/git push origin main
-# getting to this point
+cp TestListExamples.java grading-area/
+cp -r lib grading-area/
 
-# Then, add here code to compile and run, and do any post-processing of the
-# tests
+cd grading-area
+javac -cp $CPATH *.java
+
+if [ $? -ne 0 ]; then
+  echo "Compilation error!"
+  exit 1
+fi
+
+echo "Program compiled successfully"
+
+java -cp ".;lib/junit-4.13.2.jar;lib/hamcrest-core-1.3.jar" org.junit.runner.JUnitCore TestListExamples
+
